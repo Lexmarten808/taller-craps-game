@@ -1,5 +1,6 @@
 package com.example.crapsgame.controllers;
 
+import com.example.crapsgame.models.AlertBox;
 import com.example.crapsgame.models.Dice;
 import com.example.crapsgame.models.Player;
 import javafx.event.ActionEvent;
@@ -24,9 +25,12 @@ public class GameController {
 
     private Player player;
 
+    AlertBox alertBox=new AlertBox();
+
     public void setPlayer(Player player) {
         this.player = player;
     }
+
 
     public void showNicknameLabel() {
         nicknameLabel.setText(player.getNickname());
@@ -46,5 +50,16 @@ public class GameController {
                 dice2.getDiceImagePath()
         )));
         this.rollScoreLabel.setText(String.valueOf(rollScore));
+    }
+    @FXML
+    void onActionQuestionMark(ActionEvent event) {
+        alertBox.showAlertBox("instrucciones","instrucciones del juego","El juego inicia cuando el jugador hace su\n" +
+                "lanzamiento o tiro de salida. Si en este lanzamiento sacas un 7 u 11, ganas\n" +
+                "automáticamente. Si sacas un 2, 3 o 12, es un \"Craps\" y pierdes. Cualquier otro número (4,\n" +
+                "5, 6, 8, 9, 10) establece el \"punto\". Si el jugador establece \"punto\", puede seguir lanzando\n" +
+                "con el objetivo de intentar sacar ese mismo número otra vez. Si logras sacar el \"punto\"\n" +
+                "antes de sacar un 7, ganas. Si sacas un 7 antes del punto, pierdes");
+
+
     }
 }
