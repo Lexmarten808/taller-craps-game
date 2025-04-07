@@ -1,6 +1,7 @@
 package com.example.crapsgame.models;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 
 public class AlertBox implements AlertBoxInterface{
     @Override
@@ -9,6 +10,10 @@ public class AlertBox implements AlertBoxInterface{
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setPrefSize(500, 300);
+
         alert.showAndWait();
     }
 

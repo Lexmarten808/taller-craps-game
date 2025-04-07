@@ -18,6 +18,7 @@ public class WelcomeView extends Stage {
         Scene scene = new Scene(root, 320, 240);
         this.setTitle("Craps Game - Welcome!");
         this.setScene(scene);
+        this.setResizable(false);
     }
 
     public static WelcomeView getInstance() throws IOException {
