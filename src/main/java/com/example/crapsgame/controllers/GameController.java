@@ -6,9 +6,11 @@ import com.example.crapsgame.models.Player;
 import com.example.crapsgame.models.Game;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 public class GameController {
 
@@ -17,6 +19,9 @@ public class GameController {
 
     @FXML
     private Label rollScoreLabel;
+
+    @FXML
+    private Button questionMarkButton;
 
     @FXML
     private Label pointLabel;
@@ -40,7 +45,6 @@ public class GameController {
     public void setPlayer(Player player) {
         this.player = player;
     }
-
 
     public void showNicknameLabel() {
         nicknameLabel.setText(player.getNickname());
@@ -79,6 +83,7 @@ public class GameController {
             } else {
                 game.setPoint(rollScore); // Set the point
                 isPointEstablished = true;
+                pointLabel.setStyle("-fx-background-color: #87e88d; -fx-text-fill: #000000; -fx-border-color: black");
                 this.pointLabel.setText(String.valueOf(rollScore)); // Update the point label
             }
         } else {
@@ -86,10 +91,12 @@ public class GameController {
             if (rollScore == game.getPoint()) {
                 increaseWins();
                 isPointEstablished = false; // Reset state
+                pointLabel.setStyle("-fx-background-color: white; -fx-text-fill: #000000; -fx-border-color: black");
                 this.pointLabel.setText(String.valueOf(0));
             } else if (rollScore == 7) {
                 increaseLosses();
                 isPointEstablished = false; // Reset state
+                pointLabel.setStyle("-fx-background-color: white; -fx-text-fill: #000000; -fx-border-color: black");
                 this.pointLabel.setText(String.valueOf(0));
             }
             // If it's not the point or a 7, just wait for the next roll.
@@ -113,15 +120,43 @@ public class GameController {
         game.setLosses(losses); // Set the new number of losses
         this.lostGamesLabel.setText(String.valueOf(losses)); // Update the label with the new value
     }
+
     @FXML
     void onActionQuestionMark(ActionEvent event) {
-        alertBox.showAlertBox("instrucciones","instrucciones del juego","El juego inicia cuando el jugador hace su\n" +
-                "lanzamiento o tiro de salida. Si en este lanzamiento sacas un 7 u 11, ganas\n" +
-                "automáticamente. Si sacas un 2, 3 o 12, es un \"Craps\" y pierdes. Cualquier otro número (4,\n" +
-                "5, 6, 8, 9, 10) establece el \"punto\". Si el jugador establece \"punto\", puede seguir lanzando\n" +
-                "con el objetivo de intentar sacar ese mismo número otra vez. Si logras sacar el \"punto\"\n" +
-                "antes de sacar un 7, ganas. Si sacas un 7 antes del punto, pierdes");
+        alertBox.showAlertBox(
+                "Instrucciones",
+                "Instrucciones del juego",
+                "El juego comienza cuando el jugador realiza su lanzamiento o tiro de salida.\n\n" +
+                        "Si en ese lanzamiento sacas un 7 o un 11, ganas automáticamente.\n" +
+                        "Si sacas un 2, 3 o 12, es un \"Craps\" y pierdes.\n\n" +
+                        "Cualquier otro número (4, 5, 6, 8, 9 o 10) establece el \"punto\".\n" +
+                        "Una vez establecido el punto, puedes seguir lanzando los dados con el objetivo\n" +
+                        "de volver a sacar ese mismo número. Si lo logras antes de sacar un 7, ganas.\n" +
+                        "Pero si sacas un 7 antes del punto, pierdes."
+        );
+    }
 
+    @FXML
+    void onMouseEnteredHoverEffectStart(MouseEvent event) {
+        questionMarkButton.setStyle(
+                "-fx-background-color: white; " +
+                        "-fx-border-color: black; " +
+                        "-fx-text-fill: black; " +
+                        "-fx-border-radius: 10; " +
+                        "-fx-background-radius: 10; " +
+                        "-fx-cursor: hand;"
+        );
+    }
 
+    @FXML
+    void onMouseExitedHoverEffectFinish(MouseEvent event) {
+        questionMarkButton.setStyle(
+                "-fx-background-color: black; " +
+                        "-fx-border-color: white; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-border-radius: 10; " +
+                        "-fx-background-radius: 10; " +
+                        "-fx-cursor: default;"
+        );
     }
 }
